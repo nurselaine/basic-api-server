@@ -11,3 +11,4 @@ sequelizeDatabase.sync() // this will create tables in DB BUT will NOT create DB
   })
   .catch((error) => console.error(error.message));
 
+start();
