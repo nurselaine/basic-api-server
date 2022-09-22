@@ -23,8 +23,20 @@ describe('REST API Tests', () => {
   test('Read from people', async () => {
     const response = await request.get();
     expect(response.status).toEqual(200);
-    expect(response.body)
-  })
+    expect(response.body).toBeTruthy();
+  });
+
+  it('Handles bad routes', async () => {
+    const response = await request.get('/catchAll');
+    expect(response.status).toEqual(404);
+    expect(response.body.message).toEqual('Not Found');
+  });
+
+  it('Handles bad methods', async () => {
+    const response = await request.delete('/foo');
+    expect(response.status).toEqual(404);
+    expect(response.body.message).toEqual('Not Found');
+  });
 });
 
 
