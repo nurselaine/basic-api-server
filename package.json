@@ -4,11 +4,12 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "node index.js",
+    "start": "nodemon index.js",
     "test": "NODE_ENV=test jest --verbose --coverage",
     "test-watch": "NODE_ENV=test jest jest --watchAll --verbose --coverage",
     "db:config": "sequelize init:config",
-    "db:create": "sequelize db:create"
+    "db:create": "sequelize db:create",
+    "dev": "npx nodemon"
   },
   "repository": {
     "type": "git",

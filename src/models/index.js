@@ -3,8 +3,10 @@
 
 const { Sequelize, DataTypes } = require('sequelize');
 require('dotenv').config();
-const personSchema = require('./person.schema');
-const foodSchema = require('./food.schema');
+
+const personsSchema = require('./persons.schema');
+const foodsSchema = require('./foods.schema');
+const ModelInterface = require('./modelInterface');
 
 // 'postgres://localhost:5432/database_development
 // 'postgres://username:password@localhost:5432/database_development
@@ -13,16 +15,22 @@ const DATABASE_URL = process.env.NODE_ENV === 'test'
   ? 'sqlite:memory'
   : process.env.DATABASE_URL;
 
-const sequelizeDatabase = new Sequelize(DATABASE_URL);
+const sequelizeDatabase = new Sequelize(DATABASE_URL, {
+  dialectOptions: {
+    ssl: {
+      require: true,
+      rejectUnauthorized: false,
+    },
+  },
+});
 
 // create people and food models with the given schema by calling functions
-const PersonModel = personSchema(sequelizeDatabase, DataTypes);
-const FoodModel = foodSchema(sequelizeDatabase, DataTypes);
+const PersonsModel = personsSchema(sequelizeDatabase, DataTypes);
+const FoodsModel = foodsSchema(sequelizeDatabase, DataTypes);
 
-// sequelizeDatabase.sync() // this will create tables in DB BUT will NOT create DB
-//   .then(() => console.log('successfully connected to DB'))
-//   .catch((error) => console.error(error.message));
-
-//   running npm run db:create in terminal
-
-module.exports = { sequelizeDatabase, PersonModel, FoodModel };
+module.exports = {
+  sequelizeDatabase,
+  PersonsModel,
+  FoodsModel,
+  personInterface: new ModelInterface(PersonsModel), // instance of class which is not normally uppercase
+};
