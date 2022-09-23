@@ -6,7 +6,7 @@ module.exports = (sequelizeDatabase, DataTypes) => {
       type: DataTypes.STRING,
       allowNull: false,
     },
-    calories: {
+    caloriess: {
       type: DataTypes.INTEGER,
       allowNull: true,
     },
