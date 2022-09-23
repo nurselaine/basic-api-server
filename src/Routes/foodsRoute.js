@@ -1,7 +1,6 @@
 'use strict';
 
 const express = require('express');
-const app = express();
 const router = express.Router();
 
 const validator = require('../middleware/validator');
@@ -9,7 +8,7 @@ const { FoodsModel } = require('../models/index');
 
 // **************   ROUTES   ********************
 
-router.post('/food', validator,  async (req, res, send) => {
+router.post('/food/create', validator,  async (req, res, send) => {
   try{
     const newFood = await FoodsModel.create(req.body);
     res.status(200).send(newFood);
@@ -22,6 +21,7 @@ router.get('/food/findAll', async (req, res, send) => {
   try {
     const foodList = await FoodsModel.findAll();
     res.status(200).send(foodList);
+    console.log(foodList);
   } catch (error) {
     res.status(404).send(error.message);
   }
